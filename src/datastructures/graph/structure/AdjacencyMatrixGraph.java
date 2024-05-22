@@ -122,4 +122,9 @@ public class AdjacencyMatrixGraph implements Graph {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public int getWeightedEdge(int v1, int v2) {
+		return adjacencyMatrix[v1][v2];
+	}
 }

@@ -1,5 +1,12 @@
 package datastructures;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import datastructures.algo.Path;
+import datastructures.algo.Sort;
 import datastructures.algo.Traversal;
 import datastructures.data.Graph;
 import datastructures.data.Graph.GraphType;
@@ -10,6 +17,109 @@ import datastructures.graph.structure.AdjacencySetGraph;
 public class Main {
 
 	public static void main(String[] args) {
+		Graph graph = new AdjacencyMatrixGraph(8, Graph.GraphType.DIRECTED);
+
+		graph.addEdge(0, 3, 2);
+		graph.addEdge(0, 4, 2);
+		graph.addEdge(0, 1, 1);
+
+		graph.addEdge(1, 3, 2);
+
+		graph.addEdge(2, 7, 4);
+		graph.addEdge(2, 1, 3);
+
+		graph.addEdge(3, 6, 3);
+
+		graph.addEdge(4, 7, 2);
+		graph.addEdge(7, 5, 4);
+
+		graph.displayGraph();
+
+		Path.shortestPath(graph, 0, 5);
+	}
+
+	public static void shortestPath() {
+		Graph graph = new AdjacencyMatrixGraph(8, Graph.GraphType.UNDIRECTED);
+
+		graph.addEdge(2, 7);
+		graph.addEdge(3, 0);
+		graph.addEdge(0, 4);
+		graph.addEdge(0, 1);
+		graph.addEdge(2, 1);
+		graph.addEdge(1, 3);
+		graph.addEdge(3, 5);
+		graph.addEdge(6, 3);
+
+		graph.addEdge(0, 7);
+
+		graph.displayGraph();
+
+		Path.shortestPath(graph, 1, 7);
+	}
+
+	public static void courseScheduling() {
+		List<String> courses = new ArrayList<>();
+
+		courses.add("CS100");
+		courses.add("CS101");
+		courses.add("CS102");
+		courses.add("CS103");
+		courses.add("CS104");
+		courses.add("CS105");
+		courses.add("CS240");
+
+		Map<String, List<String>> prereqs = new HashMap<>();
+		List<String> list = new ArrayList<>();
+
+		list.add("CS101");
+		list.add("CS102");
+		list.add("CS103");
+		prereqs.put("CS101", list);
+
+		list = new ArrayList<String>();
+		list.add("CS104");
+		prereqs.put("CS101", list);
+
+		list = new ArrayList<String>();
+		list.add("CS105");
+		prereqs.put("CS103", list);
+
+		list = new ArrayList<String>();
+		list.add("CS240");
+		prereqs.put("CS102", list);
+
+		List<String> courseSchedule = Sort.order(courses, prereqs);
+		System.out.println("Planning valide pour les étudiants: " + courseSchedule);
+	}
+
+	public static void topologicalSort() {
+		Graph graph = new AdjacencyMatrixGraph(8, Graph.GraphType.DIRECTED);
+
+		graph.addEdge(2, 7);
+		graph.addEdge(0, 3);
+		graph.addEdge(0, 4);
+		graph.addEdge(0, 1);
+		graph.addEdge(2, 1);
+		graph.addEdge(1, 3);
+		graph.addEdge(3, 5);
+		graph.addEdge(3, 6);
+		graph.addEdge(4, 7);
+
+		graph.displayGraph();
+
+		System.out.println("----------------------------------\n");
+
+		System.out.println(Sort.topologicalSort(graph));
+
+		System.out.println("----------------------------------\n");
+
+		graph.addEdge(7, 0);
+		System.out.println(Sort.topologicalSort(graph));
+
+		System.out.println("----------------------------------\n");
+	}
+
+	public static void graph1() {
 
 		Graph graphNonPondere = new AdjacencyMatrixGraph(8, GraphType.UNDIRECTED);
 		System.out.println("GRAPH NON PONDERE");
@@ -63,9 +173,9 @@ public class Main {
 
 		graphPondere.addEdge(5, 6, 4);
 
-		//graphPondere.addEdge(4, 6, 2);
-		//graphPondere.addEdge(6, 7, 2);
-		//graphPondere.addEdge(7, 3, 2);
+		// graphPondere.addEdge(4, 6, 2);
+		// graphPondere.addEdge(6, 7, 2);
+		// graphPondere.addEdge(7, 3, 2);
 
 		System.out.println("AFFICHAGE DU GRAPHE");
 
@@ -143,12 +253,12 @@ public class Main {
 		adjacentSetGraph.displayGraph();
 
 		boolean[] visited = new boolean[graphPondere.getNumVertices()];
-		//Traversal.breadthFirstTraversal(graphPondere, visited, 2);
-	//	for (int i = 0; i < graphPondere.getNumVertices(); i++) {
-	//		Traversal.breadthFirstTraversal(graphPondere, visited, i);
-	//	}
-		
-		Traversal.depthFirstTraversal(graphPondere,visited, 1);
+		// Traversal.breadthFirstTraversal(graphPondere, visited, 2);
+		// for (int i = 0; i < graphPondere.getNumVertices(); i++) {
+		// Traversal.breadthFirstTraversal(graphPondere, visited, i);
+		// }
+
+		Traversal.depthFirstTraversal(graphPondere, visited, 1);
 	}
 
 }
